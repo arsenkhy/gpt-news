@@ -60,34 +60,34 @@ const NewsCarousel = () => {
             >
                 <SwiperSlide>
                     <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10 ">
-                        <TodayCard
+                        {/* <TodayCard
                         className="col-span-2 row-span-2 bg-gray"
                         // post={trendingPosts[1]}
-                        />
+                        /> */}
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
                         <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10">
-                            <TodayCard
+                            {/* <TodayCard
                             className="col-span-2 row-span-2 bg-gray"
                             // post={trendingPosts[1]}
-                            />
+                            /> */}
                         </div>
                 </SwiperSlide>
                 <SwiperSlide>
                         <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10 ">
-                            <TodayCard
+                            {/* <TodayCard
                             className="col-span-2 row-span-2 bg-gray"
                             // post={trendingPosts[1]}
-                            />
+                            /> */}
                         </div>
                 </SwiperSlide>
                 <SwiperSlide>
                         <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10 ">
-                            <TodayCard
+                            {/* <TodayCard
                             className="col-span-2 row-span-2 bg-gray"
                             // post={trendingPosts[1]}
-                            />
+                            /> */}
                         </div>
                 </SwiperSlide>
             </Swiper>

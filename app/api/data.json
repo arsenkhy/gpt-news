@@ -1,0 +1,80 @@
+{
+    "includedSources": [
+        "TechCrunch",
+        "Wired",
+        "The Verge",
+        "Engadget",
+        "Forbes",
+        "pymnts.com",
+        "Business Insider",
+        "Bloomberg",
+        "Mashable",
+        "CNET",
+        "Gizmodo",
+        "Scientific American",
+        "Popular Science",
+        "MIT Technology Review",
+        "IEEE Spectrum",
+        "Fast Company",
+        "Entrepreneur",
+        "Fox News",
+        "TED Talks",
+        "TechRadar",
+        "Digital Trends",
+        "PCMag",
+        "ZDNet",
+        "Ars Technica",
+        "VentureBeat",
+        "Slashdot",
+        "TechRepublic",
+        "Gizmag",
+        "New Atlas",
+        "Tom's Hardware",
+        "Android Authority",
+        "The Wall Street Journal",
+        "iMore",
+        "AnandTech",
+        "MakeUseOf",
+        "How-To Geek",
+        "TechSpot",
+        "The Next Web",
+        "Android Central",
+        "9to5Mac",
+        "Droid Life",
+        "The Guardian",
+        "Reuters",
+        "CNBC",
+        "New York Post",
+        "Mashable",
+        "Business Insider",
+        "Fortune",
+        "Fox Business",
+        "Harvard Business Review"
+      ],
+
+    "categories": [
+        {
+            "name": "today",
+            "query": ""
+        },
+        {
+            "name": "bigTech",
+            "query": "big tech OR technology giants OR tech giants OR tech titans OR major tech companies OR FAANG OR top tech firms OR leading tech corporations OR dominant tech players OR startup ecosystem OR tech startups OR technology startups OR emerging startups OR disruptive startups OR innovative startups OR high-growth startups"
+        },
+        {
+            "name": "AI",
+            "query": "AI OR machine learning OR deep learning OR neural networks OR natural language processing OR computer vision OR robotics OR automation OR data science OR cognitive computing OR intelligent systems OR AI applications OR AI ethics OR AI research OR AI trends"
+        },
+        {
+            "name": "gadgets",
+            "query": "gadgets OR electronics OR consumer electronics OR smart devices OR wearable technology OR IoT devices OR tech gadgets OR mobile devices OR smartphones OR tablets OR laptops OR smart home devices OR audio devices OR gaming devices OR tech accessories"
+        },
+        {
+            "name": "science",
+            "query": "technology science OR computer science OR data science OR information science OR applied science OR engineering OR scientific research OR tech innovation OR emerging technologies OR cutting-edge technology OR scientific advancements OR tech breakthroughs OR tech discoveries OR tech developments OR tech experiments"
+        },        {
+            "name": "culture",
+            "query": "tech culture OR technology culture OR digital culture OR tech lifestyle OR digital lifestyle OR geek culture OR nerd culture OR hacker culture OR maker culture OR tech community OR digital community OR tech enthusiasts OR digital enthusiasts OR tech trends OR digital trends"
+        }
+    ]
+}

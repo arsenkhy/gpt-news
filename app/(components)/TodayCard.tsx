@@ -1,18 +1,18 @@
+import { Post } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 type TodayCardProps = {
     className?: string;
-    // post: Post;
+    post: Post;
   };
   
-  const TodayCard = ({ className }: TodayCardProps) => {
+  const TodayCard = ({ className, post }: TodayCardProps) => {
     return (
       <Link
         className={`${className} sm:mt-0 sm:h-auto relative mt-7 block w-full h-96 hover:opacity-70 rounded-lg`}
-        // href={`${process.env.NEXT_PUBLIC_URL}/post/${post?.id}`}
-        href={`/`}
+        href={`${process.env.NEXT_PUBLIC_URL}/post/${post?.id}`}
       >
         <div className="z-0 relative w-full h-full">
           {/* <Image
@@ -31,9 +31,9 @@ type TodayCardProps = {
         <div className="absolute z-1 top-0 left-0 w-full h-full bg-gradient-gradual rounded-lg"/>
         <div className="absolute z-2 bottom-0 left-0 p-3">
           <h4 className="inline-block px-5 py-1 bg-primary text-secondary">
-            category
+          {post?.category}
           </h4>
-          <div className="text-primary mt-2">title</div>
+          <div className="text-primary mt-2">{post?.title}</div>
         </div>
       </Link>
     );

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Logo from 'public/assets/main_logo.png'
@@ -6,7 +6,23 @@ import { BiSearch } from 'react-icons/bi'
 
 type Props = {}
 
-function Header({}: Props) {
+const Header = ({}: Props) => {
+//   const [content, setContent] = useState<string>("I am a helpful assistant.");
+
+//   const postAiContent = async () => {
+//     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/openai`, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         title: 'Ai taking over the world',
+//         role: 'Enthusiast',
+//       }),
+//     });
+//     const data = await response.json();
+
+//     setContent(data.content);
+//   };
+
   return (
     <header className="mb-0">
       <nav className="flex justify-between items-center w-full text-secondary px-10 py-8">
