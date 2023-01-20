@@ -1,11 +1,12 @@
 import React from "react";
 import Card from "app/(components)/Card";
+import { Post } from "@prisma/client";
 
-// type Props = {
-//   travelPosts: Array<Post>;
-// };
+type Props = {
+  bigTechPosts: Array<Post>;
+};
 
-const BigTech = () => {
+const BigTech = ({ bigTechPosts }: Props) => {
   return (
     <section className="mt-10">
       <hr className="border-1 opacity-20" />
@@ -17,26 +18,22 @@ const BigTech = () => {
       {/* MAIN CARD */}
       <Card
         className=" sm:flex justify-between items-center gap-3 mt-7 mb-5"
-        imageHeight="h-80"
-        // post={travelPosts[3]}
+        post={bigTechPosts[0]}
       />
 
       {/* CARDS ROW */}
       <div className="sm:flex justify-between gap-8">
         <Card
           className="basis-1/3 mt-5 sm:mt-0"
-          imageHeight="h-80"
-        //   post={travelPosts[0]}
+          post={bigTechPosts[1]}
         />
         <Card
           className="basis-1/3 mt-5 sm:mt-0"
-          imageHeight="h-80"
-        //   post={travelPosts[1]}
+          post={bigTechPosts[2]}
         />
         <Card
           className="basis-1/3 mt-5 sm:mt-0"
-          imageHeight="h-80"
-        //   post={travelPosts[2]}
+          post={bigTechPosts[3]}
         />
       </div>
     </section>

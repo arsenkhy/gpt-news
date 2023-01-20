@@ -1,0 +1,111 @@
+import React from "react";
+import { prisma } from "@/app/api/client";
+import { Post as PostType } from "@prisma/client";
+import Sidebar from "@/app/(components)/Sidebar";
+import Article from "@/app/post/[id]/Article";
+
+type Props = {
+  params: { id: string };
+};
+
+export const revalidate = 6000;
+
+const getPost = async (id: string) => {
+  const post: PostType | null = await prisma.post.findUnique({
+    where: { id },
+  });
+
+  if (!post) {
+    console.log(`Post with id: ${id} not found`);
+    return null;
+  }
+  
+  return post;
+};
+const getRelatedPosts = async (postId: string, category: string): Promise<PostType[]> => {
+  if (category === 'today') {
+    const relatedPosts: PostType[] = await prisma.post.findMany({
+      where: {
+        NOT: {
+          category: 'today',
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 3,
+    });
+
+    return relatedPosts;
+  } else {
+    // Fetch posts from the same category
+    const post: PostType | null = await prisma.post.findUnique({
+      where: { id: postId },
+    });
+
+    if (!post) {
+      console.log(`Post with id: ${postId} not found`);
+      return [];
+    }
+
+    const relatedPosts: PostType[] = await prisma.post.findMany({
+      where: {
+        category: post.category,
+        NOT: {
+          id: postId,
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 3,
+    });
+
+    return relatedPosts;
+  }
+};
+
+const getTodayPosts = async (postId: string, category: string): Promise<PostType[]> => {
+  const todayPosts: PostType[] = await prisma.post.findMany({
+    where: {
+      category: category,
+      NOT: {
+        id: postId,
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 5,
+  });
+
+  return todayPosts;
+};
+
+
+
+const Post = async ({ params }: Props) => {
+  const { id } = params;
+  const post = await getPost(id);
+  const relatedPosts = await getRelatedPosts(id, post?.category || '');
+  const todayPosts = await getTodayPosts(id, 'today');
+
+  if (!post) {
+    return <div>Post Not Found</div>;
+  }
+
+  return (
+    <main className="px-10 leading-7">
+      <div className="md:flex gap-10 mb-5 max-w-maxw mx-auto">
+        <div className="basis-3/4">
+          <Article post={post} relatedPosts={relatedPosts}/>
+        </div>
+        <div className="basis-1/4">
+          <Sidebar todayPosts={todayPosts}/>
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default Post;

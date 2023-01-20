@@ -1,14 +1,21 @@
 import Image from "next/image";
 import Subscribe from "./Subscribe";
+import TrySearch from "./TrySearch";
 import React from "react";
+import SidePosts from "app/(components)/SidePosts";
+import { Post } from "@prisma/client";
 
-type Props = {};
+type Props = {
+  todayPosts?: Array<Post>;
+};
 
-const Sidebar = (props: Props) => {
+const Sidebar = ({ todayPosts = [] }: Props) => {
   return (
     <section className="mt-10">
-      <hr className="border-1 opacity-20" />
+      <hr className="border-1 opacity-20 pt-5" />
       <Subscribe />
+      {todayPosts && todayPosts.length > 0 && <SidePosts bigTechPosts={todayPosts} />}
+      <TrySearch />
     </section>
   );
 };

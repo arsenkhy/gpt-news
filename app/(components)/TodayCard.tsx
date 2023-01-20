@@ -1,7 +1,10 @@
+"use client"
 import { Post } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 type TodayCardProps = {
     className?: string;
@@ -9,16 +12,20 @@ type TodayCardProps = {
   };
   
   const TodayCard = ({ className, post }: TodayCardProps) => {
+    const [ref, inView] = useInView({
+      triggerOnce: true, 
+    });
+
     return (
       <Link
-        className={`${className} sm:mt-0 sm:h-auto relative mt-7 block w-full h-96 hover:opacity-70 rounded-lg`}
+        className={`${className} sm:mt-0 sm:h-auto relative mt-7 block w-full h-96 rounded-lg`}
         href={`${process.env.NEXT_PUBLIC_URL}/post/${post?.id}`}
       >
         <div className="z-0 relative w-full h-full">
-          {/* <Image
+          <Image
+            className="rounded-lg"
             fill
             alt="tech"
-            placeholder="blur"
             src={post?.image}
             sizes="(max-width: 480px) 100vw,
             src={post?.image}
@@ -26,15 +33,21 @@ type TodayCardProps = {
                 (max-width: 1060px) 50vw,
                 33vw"
             style={{ objectFit: "cover" }}
-            /> */}
+            />
         </div>
-        <div className="absolute z-1 top-0 left-0 w-full h-full bg-gradient-gradual rounded-lg"/>
-        <div className="absolute z-2 bottom-0 left-0 p-3">
-          <h4 className="inline-block px-5 py-1 bg-primary text-secondary">
-          {post?.category}
-          </h4>
-          <div className="text-primary mt-2">{post?.title}</div>
-        </div>
+        <div className="absolute z-1 top-0 left-0 w-full h-full bg-gradient-gradual rounded-lg opacity-80 hover:opacity-100 transition-all"/>
+        <motion.div 
+        className="absolute z-2 bottom-0 left-0 p-3"
+        ref={ref}
+        initial={{ opacity: 0, y:20 }}
+        animate={{ opacity: inView ? 1 : 0, y:0 }}
+        transition={{ duration: 0.7 }}
+        >
+          <h4 className="inline-block px-5 py-1 bg-secondary bg-opacity-40 rounded-2xl text-primary text-xs">
+          {post?.source}
+          </h4> 
+          <div className="text-primary mt-2 text-lg font-semibold " >{post?.title}</div>
+        </motion.div>
       </Link>
     );
   };

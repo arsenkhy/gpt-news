@@ -1,6 +1,6 @@
-// Import Swiper React components
 'use client';
 import React from 'react';
+import { Post } from "@prisma/client";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay} from 'swiper';
 import 'swiper/css';
@@ -11,7 +11,11 @@ import 'swiper/css/autoplay';
 import { MdArrowBackIos, MdArrowForwardIos} from "react-icons/md";
 import TodayCard from "app/(components)/TodayCard";
 
-const NewsCarousel = () => {
+type Props = {
+    hotTopicPosts: Array<Post>;
+};
+
+const NewsCarousel = ({ hotTopicPosts }: Props) => {
   return (
     <section className="mt-10">
         <hr className="border-1 opacity-20" />
@@ -60,34 +64,34 @@ const NewsCarousel = () => {
             >
                 <SwiperSlide>
                     <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10 ">
-                        {/* <TodayCard
-                        className="col-span-2 row-span-2 bg-gray"
-                        // post={trendingPosts[1]}
-                        /> */}
+                        <TodayCard
+                        className="col-span-2 row-span-2 "
+                        post={hotTopicPosts[0]}
+                        />
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
                         <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10">
-                            {/* <TodayCard
-                            className="col-span-2 row-span-2 bg-gray"
-                            // post={trendingPosts[1]}
-                            /> */}
+                            <TodayCard
+                            className="col-span-2 row-span-2 "
+                            post={hotTopicPosts[1]}
+                            />
                         </div>
                 </SwiperSlide>
                 <SwiperSlide>
                         <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10 ">
-                            {/* <TodayCard
-                            className="col-span-2 row-span-2 bg-gray"
-                            // post={trendingPosts[1]}
-                            /> */}
+                            <TodayCard
+                            className="col-span-2 row-span-2 "
+                            post={hotTopicPosts[2]}
+                            />
                         </div>
                 </SwiperSlide>
                 <SwiperSlide>
                         <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10 ">
-                            {/* <TodayCard
-                            className="col-span-2 row-span-2 bg-gray"
-                            // post={trendingPosts[1]}
-                            /> */}
+                            <TodayCard
+                            className="col-span-2 row-span-2 "
+                            post={hotTopicPosts[3]}
+                            />
                         </div>
                 </SwiperSlide>
             </Swiper>

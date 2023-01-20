@@ -29,25 +29,25 @@ const Today = ({ todayPosts }: Props) => {
 
   return (
     <section className="pt-3 pb-10">
-      <div className="sm:grid gap-2 grid-cols-7 grid-rows-2 sm:h-[600px] my-3 ">
+      <div className="sm:grid gap-3 grid-cols-7 grid-rows-2 sm:h-[600px] my-3 ">
         <TodayCard
-          className="col-span-2 row-span-1 bg-gray"
+          className="col-span-2 row-span-1 "
           post={todayPosts[1]}
         />
         <TodayCard
-          className="col-span-3 row-span-2 bg-gray"
+          className="col-span-3 row-span-2 "
           post={todayPosts[0]}
         />  
         <TodayCard
-          className="col-span-2 row-span-1 bg-gray"
+          className="col-span-2 row-span-1 "
           post={todayPosts[2]}
         />
         <TodayCard
-          className="col-span-2 row-span-1 bg-gray"
+          className="col-span-2 row-span-1 "
           post={todayPosts[3]}
         />
         <TodayCard
-          className="col-span-2 row-span-1 bg-gray"
+          className="col-span-2 row-span-1 "
           post={todayPosts[4]}
         />
       </div>
