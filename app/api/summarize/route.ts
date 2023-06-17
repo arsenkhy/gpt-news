@@ -9,16 +9,6 @@ const openai = new OpenAIApi(configuration);
 
 export async function POST(request: Request) {
   try {
-    // Check if the required key matches the expected value
-    const requestKey = request.headers.get('requestKey');
-    if (!requestKey) {
-        return NextResponse.json({ error: 'Required header is missing' }, { status: 400 });
-    }
-
-    if (requestKey !== process.env.APP_KEY) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Check if the parameters are missing
     const { content } = await request.json();
     if (!content) {
@@ -36,7 +26,7 @@ export async function POST(request: Request) {
           },
           {
             role: "system",
-            content: `Write this summary html tags. Include headers, and text, but no images.`,
+            content: `Write this summary html tags. Include headers, and text, but no images. Don't use <h1> tags, only <h2> and <h3>`,
           },
         ],
       });

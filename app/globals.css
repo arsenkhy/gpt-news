@@ -10,3 +10,13 @@ body,
   width: 100%;
   @apply text-sm;
 }
+
+/* .swiper-pagination {
+  @apply mt-20;
+  @apply relative;
+} */
+
+.my-swiper {
+  @apply relative;
+  @apply mt-20;
+}

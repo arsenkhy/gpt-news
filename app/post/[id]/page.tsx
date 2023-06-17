@@ -22,6 +22,7 @@ const getPost = async (id: string) => {
   
   return post;
 };
+
 const getRelatedPosts = async (postId: string, category: string): Promise<PostType[]> => {
   if (category === 'today') {
     const relatedPosts: PostType[] = await prisma.post.findMany({
@@ -81,8 +82,6 @@ const getTodayPosts = async (postId: string, category: string): Promise<PostType
 
   return todayPosts;
 };
-
-
 
 const Post = async ({ params }: Props) => {
   const { id } = params;

@@ -1,39 +1,14 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 import { prisma } from "../client";
-
-const { JSDOM } = require('jsdom');
-const { Readability } = require('@mozilla/readability');
+import { fetchFullArticleContent } from '../news/route';
 const data = require('../data.json');
 
 // Constants
 const CONTENT_MAX_CHAR_LIMIT = 6000;
 const MAX_NUM_ARTICLES = 5;
 const NUMBER_OF_DAYS_BACK = 7;
-const CATEGORIES = data.categories.map((category: any) => category.name);
 const INCLUDED_SOURCES = data.includedSources;
-
-/**
- * Fetches the full article content from the given URL.
- * @param {string} url - The URL of the article.
- * @returns {Promise<string>} - A promise that resolves to the full article content.
- */
-export async function fetchFullArticleContent(url: string): Promise<string> {
-  try {
-    const fullArticleResponse = await axios.get(url);
-    const fullArticleHtml = fullArticleResponse.data;
-    const dom = new JSDOM(fullArticleHtml, {
-      pretendToBeVisual: true,
-      url: url
-    });
-    const article = new Readability(dom.window.document).parse();
-    const articleContent = article && article.textContent ? article.textContent.slice(0, CONTENT_MAX_CHAR_LIMIT) : '';
-    return articleContent;
-  } catch (error) {
-    console.error('Failed to fetch article content:', error);
-    return ''; // Return an empty string on failure
-  }
-}
 
 /**
  * Filters the articles based on specific requirements.
@@ -45,15 +20,6 @@ async function filterArticles(articles: any) {
   let count = 0;
 
   for (const article of articles) {
-
-    // Check if article is not a duplicate
-    const existingPost = await prisma.post.findFirst({
-      where: { title: article.title },
-    });
-
-    if (existingPost) {
-      continue;
-    }
 
     if (!article.urlToImage) {
       continue;
@@ -98,11 +64,6 @@ async function filterArticles(articles: any) {
   return selectedArticles;
 }
 
-interface Category {
-  name: string;
-  query: string;
-}
-
 /**
  * Handles the POST request for fetching news articles.
  * @param {Request} request - The incoming request object.
@@ -120,50 +81,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Check if the category parameter is missing
-    const { category } = await request.json();
-    if (!category) {
-      return NextResponse.json({ error: 'Category parameter is required' }, { status: 400 });
+    // Check if the query parameter is missing
+    const { query } = await request.json();
+    if (!query) {
+      return NextResponse.json({ error: 'Query parameter is required' }, { status: 400 });
     }
 
-    if (!CATEGORIES.includes(category)) {
-      return NextResponse.json({ error: 'Invalid category' }, { status: 400 });
-    } 
-
-    // Assign correct API url and params based on category
+    // Assign correct API url and params based on query
     let newsApiUrl;
     let params;
-    const ctg: Category = data.categories.find((ctg: Category) => ctg.name === category);
-    const QUERY_STRING = ctg?.query || "";
 
-    // Top headlines based search
-    if (category === 'today') {
-        newsApiUrl = 'https://newsapi.org/v2/top-headlines';
-        params = {
-          country: 'us',
-          category: 'technology',
-          pageSize: 40,
-        };
-    } else if (category === 'science') {
-        newsApiUrl = 'https://newsapi.org/v2/top-headlines';
-        params = {
-          country: 'us',
-          category: 'science',
-          pageSize: 50,
-        };
-    } else {  // Query based search
-      const fromDate = new Date(); // Get the current date and time
-      fromDate.setDate(fromDate.getDate() - NUMBER_OF_DAYS_BACK); // Start from _ days ago
-      const fromDateISOString = fromDate.toISOString().split('T')[0];
+    // Query based search
+    const fromDate = new Date(); // Get the current date and time
+    fromDate.setDate(fromDate.getDate() - NUMBER_OF_DAYS_BACK); // Start from _ days ago
+    const fromDateISOString = fromDate.toISOString().split('T')[0];
 
-      newsApiUrl = 'https://newsapi.org/v2/everything';
-      params = {
-        q: QUERY_STRING,
+    newsApiUrl = 'https://newsapi.org/v2/everything';
+    params = {
+        q: query,
         sortBy: 'relevancy',
         language: 'en',
         from: fromDateISOString,
-      };
-    }
+        searchIn: 'description',
+    };
 
     // Make request to News API  
     const response = await axios.get(newsApiUrl, {
@@ -179,17 +119,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No articles found' }, { status: 404 });
     }
 
-    // Filter and select up to five articles that meet the requirements
+    // Filter and select up to MAX_NUM of articles that meet the requirements
     const selectedArticles = await filterArticles(articles);
     if (selectedArticles.length === 0) {
       return NextResponse.json({ error: 'No articles found' }, { status: 404 });
     }
 
-    // Fetch the full article content for each article, and add category
+    // Fetch the full article content for each article
     const categorizedArticles = await Promise.all(
       selectedArticles.map(async article => {
         const fullArticleContent = await fetchFullArticleContent(article.url);
-        return { ...article, content: fullArticleContent, category: category };
+        return { ...article, content: fullArticleContent };
       })  
     );
 

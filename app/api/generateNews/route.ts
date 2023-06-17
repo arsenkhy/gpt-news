@@ -131,40 +131,6 @@ export async function POST(request: Request) {
         const initialResponse = NextResponse.json({ message: 'Triggered database update' }, { status: 200 });
         updateDatabase(category, requestKey);
 
-        // Get the news articles for the given category
-        // const newsResponse = await getNews(category, requestKey);
-        // const currentNews = await newsResponse.json();
-        // if (newsResponse.status !== 200) {
-        //     return NextResponse.json({ error: currentNews.error }, { status: newsResponse.status });
-        // }
-
-        // let summary = '';
-        // // Generate the summary for each article
-        // for (const article of currentNews) {
-        // // for (let i = 0; i<1; i++) {
-        //     const aiContentResponse = await generateSummary(article.content, requestKey);
-        //     if (aiContentResponse !== undefined) {
-        //         const aiContent = await aiContentResponse.json();
-        //         if (aiContentResponse.status !== 200) {
-        //             return NextResponse.json({ error: aiContent.error }, { status: aiContentResponse.status });
-        //         }
-        //         article.content = aiContent.content;
-        //     } else {
-        //         return NextResponse.json({ error: "Error generating summaries" }, { status: 500 });
-        //     }
-        // }
-
-        
-        
-        // const posts = [];
-
-        // for (const post of posts) {
-        //   await prisma.post.create({ data: post });
-        // }
-
-        // return NextResponse.json(currentNews, { status: 200 });
-
-
         return initialResponse;
     } catch (error) {
       console.error("request error", error);

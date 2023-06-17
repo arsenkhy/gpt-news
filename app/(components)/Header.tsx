@@ -50,14 +50,14 @@ const Header = ({}: Props) => {
         </div>
 
         {/* SEARCH BUTTON */}
-        <Link className="flex items-center hover:text-secondary bg-secondary border-2 border-secondary rounded-3xl mb-2 shadow-xl hover:shadow-3xl focus:outline-none focus:ring-3 focus:ring-secondary hover:opacity-70" href="/">
+        <Link className="flex items-center hover:text-secondary bg-secondary border-2 border-secondary rounded-3xl mb-2 shadow-xl hover:shadow-3xl focus:outline-none focus:ring-3 focus:ring-secondary hover:opacity-70" href={`${process.env.NEXT_PUBLIC_URL}/search`}>
           <BiSearch className="text-xl text-primary ml-3 sm:text-3xl" />
           <p className="text-md sm:text-lg font-semibold search p-3 mr-2 text-primary">Search</p>
         </Link>
       </nav>
 
       <div className="px-10">
-        <hr className="border-1 max-w-maxw mx-auto opacity-20" />
+        <hr className="border-1 opacity-20" />
       </div>
     </header>  
   )

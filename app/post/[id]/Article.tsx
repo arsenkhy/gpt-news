@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import TextContent from "./TextContent"
+import TextContent from "@/app/(components)/TextContent"
 import { Post } from "@prisma/client";
 import GptLogo from "public/assets/gpt.svg"
 import RelatedArticles from "./RelatedArticles";
@@ -35,7 +35,7 @@ const Content = ({ post, relatedPosts }: Props) => {
       <h5 className="text-secondary italic">{categoryMappings[post.category]}</h5>
 
         {/* HEADER */}
-      <h3 className="font-bold text-3xl mt-3">{post.title}</h3>
+      <h3 className="font-bold text-xl sm:text-3xl mt-3">{post.title}</h3>
         <div className="flex gap-2 items-center">
             <div className="bg-secondary py-1 px-3 opacity-70 rounded-2xl">
                 <h6 className="text-primary text-sm">{post.source}</h6>
