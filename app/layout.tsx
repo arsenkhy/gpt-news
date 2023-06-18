@@ -3,17 +3,13 @@ import { Montserrat, Open_Sans } from "next/font/google";
 import Header from "app/(components)/Header";
 import Footer from "app/(components)/Footer";
 
-// const openSans = Open_Sans({
-//   subsets: ["latin"],
-// });
-
 const montserrat = Montserrat({
   subsets: ["latin"],
 });
 
 export const metadata = {
-  title: "Tech TLDR",
-  description: "A blog made by GPT",
+  title: "Tech Digest News Blog",
+  description: "A tech news blog made by GPT-3.5",
 };
 
   export default function RootLayout({

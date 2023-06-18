@@ -44,9 +44,8 @@ const Header = ({}: Props) => {
         {/* NAV LINKS */}  
         <div className="flex justify-between items-center gap-4 sm:gap-10">
           <Link className="hidden sm:block text-lg font-semibold hover:text-third transition-all" href="/">Home</Link>
-          <Link className="text-lg font-semibold hover:text-third transition-all" href="/">TLDR
-          </Link>
-          <Link className="text-lg font-semibold hover:text-third transition-all" href="/">About</Link>
+          <Link className="text-lg font-semibold hover:text-third transition-all" href={`${process.env.NEXT_PUBLIC_URL}/tldr`}>TLDR</Link>
+          <Link className="text-lg font-semibold hover:text-third transition-all" href={`${process.env.NEXT_PUBLIC_URL}/about`}>About</Link>
         </div>
 
         {/* SEARCH BUTTON */}

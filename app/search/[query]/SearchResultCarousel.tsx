@@ -79,7 +79,7 @@ const SearchCarousel = ({ articles, handleClick, isLoading, selectedCard }: Prop
         <div className={`relative flex items-center justify-between -mx-7 ${isLoadingSlide ? 'opacity-0' : ''}`}>
             <div className="hidden sm:block">
                 <div className="w-50 h-50 flex items-center justify-center">
-                    <IoIosArrowDropleftCircle size={50} className={`button-left text-secondary ${isBeginning ? 'opacity-0' : ''}`} />
+                    <IoIosArrowDropleftCircle size={50} className={`button-left text-secondary ${isBeginning ? 'opacity-0' : ''} hover:cursor-pointer`} />
                 </div>
             </div>
           
@@ -125,7 +125,7 @@ const SearchCarousel = ({ articles, handleClick, isLoading, selectedCard }: Prop
 
             <div className="hidden sm:block">
                 <div className="w-50 h-50 flex items-center justify-center">
-                    <IoIosArrowDroprightCircle size={50} className={`button-right text-secondary ${isEnd ? 'opacity-0' : ''}`} />
+                    <IoIosArrowDroprightCircle size={50} className={`button-right text-secondary ${isEnd ? 'opacity-0' : ''} hover:cursor-pointer`} />
                 </div>
             </div>
 

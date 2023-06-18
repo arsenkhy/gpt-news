@@ -1,10 +1,4 @@
 import React from "react";
-import { prisma } from "@/app/api/client";
-import { Post as PostType } from "@prisma/client";
-
-// type Props = {
-//     params: { s: string };
-//   };
 
 const SearchHome = () => {
     return (

@@ -11,7 +11,7 @@ type Props = {
 
 const Sidebar = ({ todayPosts = [] }: Props) => {
   return (
-    <section className="mt-10">
+    <section className="mt-10 overflow-y-auto sticky top-0">
       <hr className="border-1 opacity-20 pt-5" />
       <Subscribe />
       {todayPosts && todayPosts.length > 0 && <SidePosts bigTechPosts={todayPosts} />}

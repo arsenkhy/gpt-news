@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Today from './(home)/Today'
 import BigTech from './(home)/BigTech'
 import Sidebar from './(components)/Sidebar'
