@@ -1,6 +1,6 @@
 import React from "react";
 import { prisma } from "@/app/api/client";
-import { Post, Post as PostType } from "@prisma/client";
+import { Post } from "@prisma/client";
 import Sidebar from "@/app/(components)/Sidebar";
 import Article from "@/app/post/[id]/Article";
 import ServiceUnavailable from "@/app/(components)/ServiceUnavailable";
@@ -13,7 +13,7 @@ export const revalidate = 6000;
 
 const getPost = async (id: string) => {
   try {
-    const post: PostType | null = await prisma.post.findUnique({
+    const post: Post | null = await prisma.post.findUnique({
       where: { id },
     });
 
@@ -24,15 +24,15 @@ const getPost = async (id: string) => {
     
     return post;
   } catch (error) {
-    console.log("Error retrieving posts:", error);
+    console.log("Error retrieving posts:", error);  
     return []; 
   }
 };
 
-const getRelatedPosts = async (postId: string, category: string): Promise<PostType[]> => {
+const getRelatedPosts = async (postId: string, category: string): Promise<Post[]> => {
   try {
   if (category === 'today') {
-    const relatedPosts: PostType[] = await prisma.post.findMany({
+    const relatedPosts: Post[] = await prisma.post.findMany({
       where: {
         NOT: {
           category: 'today',
@@ -47,7 +47,7 @@ const getRelatedPosts = async (postId: string, category: string): Promise<PostTy
     return relatedPosts;
   } else {
     // Fetch posts from the same category
-    const post: PostType | null = await prisma.post.findUnique({
+    const post: Post | null = await prisma.post.findUnique({
       where: { id: postId },
     });
 
@@ -56,7 +56,7 @@ const getRelatedPosts = async (postId: string, category: string): Promise<PostTy
       return [];
     }
 
-    const relatedPosts: PostType[] = await prisma.post.findMany({
+    const relatedPosts: Post[] = await prisma.post.findMany({
       where: {
         category: post.category,
         NOT: {
@@ -77,9 +77,9 @@ const getRelatedPosts = async (postId: string, category: string): Promise<PostTy
 }
 };
 
-const getTodayPosts = async (postId: string, category: string): Promise<PostType[]> => {
+const getTodayPosts = async (postId: string, category: string): Promise<Post[]> => {
   try {
-  const todayPosts: PostType[] = await prisma.post.findMany({
+  const todayPosts: Post[] = await prisma.post.findMany({
     where: {
       category: category,
       NOT: {
@@ -99,15 +99,14 @@ const getTodayPosts = async (postId: string, category: string): Promise<PostType
 }
 };
 
-const Post = async ({ params }: Props) => {
+
+const PostPage = async ({ params }: Props) => {
   const { id } = params;
   const post = await getPost(id);
   
   if (!post) {
-    return (
-      <ServiceUnavailable/>
-    )
-  }
+    return <ServiceUnavailable />;
+  } 
   //@ts-ignore
   const relatedPosts = await getRelatedPosts(id, post?.category || '');
   const todayPosts = await getTodayPosts(id, 'today');
@@ -132,4 +131,4 @@ const Post = async ({ params }: Props) => {
   );
 };
 
-export default Post;
+export default PostPage;
