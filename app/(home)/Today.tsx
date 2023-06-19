@@ -1,10 +1,6 @@
-// "use client"; 
 import { Post } from "@prisma/client";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import TodayCard from "app/(components)/TodayCard";
-
 
 type Props = {
   todayPosts: Array<Post>;
@@ -12,7 +8,12 @@ type Props = {
 
 const Today = ({ todayPosts }: Props) => {
   return (
-    <section className="pt-3 pb-10">
+    <section className="pt-3">
+      {/* HEADER */}
+      <div className="flex items-center gap-3 mb-5 mt-2">
+        <p className="font-bold text-2xl ">Today's Spotlight</p>
+      </div>
+
       <div className="sm:grid gap-3 grid-cols-7 grid-rows-2 sm:h-[600px] my-3 ">
         <TodayCard
           className="col-span-2 row-span-1 "
@@ -35,11 +36,6 @@ const Today = ({ todayPosts }: Props) => {
           post={todayPosts[4]}
         />
       </div>
-      <p className="text-sm">
-        Id cursus purus adipiscing ipsum pretium. Scelerisque suspendisse
-        pharetra ultrices mauris ut lacus sagittis pharetra dictum. Congue
-        viverra in aliquam feugiat pellentesque.
-      </p>
     </section>
   );
 };

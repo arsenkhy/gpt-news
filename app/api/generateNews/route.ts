@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import axios from "axios";
 import { prisma } from "../client";
 import { POST as news} from '../news/route';
 import { POST as openai} from '../openai/route';
@@ -44,7 +43,7 @@ async function updateDatabase(category: any, requestKey: any) {
       const newsResponse = await getNews(category, requestKey);
       const currentNews = await newsResponse.json();
       if (newsResponse.status !== 200) {
-        console.error('Error fetching news:', currentNews.error);
+        console.log('Error fetching news:', currentNews.error);
         updateStatus = 'completed';
         return;
       }
@@ -58,7 +57,7 @@ async function updateDatabase(category: any, requestKey: any) {
         if (aiContentResponse !== undefined) {
           const aiContent = await aiContentResponse.json();
           if (aiContentResponse.status !== 200) {
-            console.error('Error generating summary: ', aiContent.error);
+            console.log('Error generating summary: ', aiContent.error);
             updateStatus = 'completed';
             return;
           }
@@ -92,7 +91,7 @@ async function updateDatabase(category: any, requestKey: any) {
           console.log('\n\n');
 
         } else {
-          console.error('Error generating summaries');
+          console.log('Error generating summaries');
           updateStatus = 'completed';
           return;
         }
@@ -100,7 +99,7 @@ async function updateDatabase(category: any, requestKey: any) {
        console.log('Database update completed.');
        updateStatus = 'completed';
     } catch (error) {
-        console.error('Database update failed:', error);
+        console.log('Database update failed:', error);
        updateStatus = 'completed';
     }   
 }
@@ -133,7 +132,7 @@ export async function POST(request: Request) {
 
         return initialResponse;
     } catch (error) {
-      console.error("request error", error);
+      console.log("request error", error);
       NextResponse.json({ error: "Error generating news" }, { status: 500 });
     }
   }

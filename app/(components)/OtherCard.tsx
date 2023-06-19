@@ -21,7 +21,9 @@ const OtherCard = ({
         </div>
             
         {/* IMAGE */}
-        <Link href={`${process.env.NEXT_PUBLIC_URL}/post/${posts[0]?.id}`}>
+        <Link href={`${process.env.NEXT_PUBLIC_URL}/post/${posts[0]?.id}`}
+              className="opacity-90 hover:opacity-100 transition-all"      
+            >
             <div className="relative w-auto mb-3 bg-gray h-80" >
             <Image
                 fill

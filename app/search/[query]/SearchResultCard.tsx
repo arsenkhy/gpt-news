@@ -41,7 +41,7 @@ const SideCard = ({
                 <Image
                     className="rounded-t-lg"
                     fill
-                    alt="tech"
+                    alt="Image"
                     src={urlToImage}
                     style={{ objectFit: "cover" }}
                 />

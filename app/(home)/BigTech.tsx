@@ -12,7 +12,7 @@ const BigTech = ({ bigTechPosts }: Props) => {
       <hr className="border-1 opacity-20" />
       {/* HEADER */}
       <div className="flex items-center gap-3 my-8">
-        <p className="font-bold text-2xl">Big tech & Startups</p>
+        <p className="font-bold text-2xl">Big Tech & Startups</p>
       </div>
 
       {/* MAIN CARD */}

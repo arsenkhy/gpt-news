@@ -3,27 +3,33 @@ import BigTech from './(home)/BigTech'
 import Sidebar from './(components)/Sidebar'
 import NewsCarousel from './(home)/NewsCarousel'
 import Other from './(home)/Other'
+import ServiceUnavailable from './(components)/ServiceUnavailable'
 import { prisma } from "app/api/client";
 import { Post } from "@prisma/client";
 
-export const revalidate = 10;
+export const revalidate = 1000;
 
 const getPosts = async () => {
-  const posts = await prisma.post.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
+  try {
+    const posts = await prisma.post.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
-  const formattedPosts = await Promise.all(
-    posts.map(async (post: Post) => {
-      return {
-        ...post,
-      };
-    })
-  );
+    const formattedPosts = await Promise.all(
+      posts.map(async (post: Post) => {
+        return {
+          ...post,
+        };
+      })
+    );
 
-  return formattedPosts;
+    return formattedPosts;
+  } catch (error) {
+    console.log("Error retrieving posts:", error);
+    return []; 
+  }
 };
 
 export default async function Home() {
@@ -57,6 +63,12 @@ export default async function Home() {
   };
 
   const [todayPosts, bigTechPosts, hotTopicPosts, gadgetsPosts, sciencePosts, culturePosts] = formatPosts();
+
+  if (posts.length === 0) {
+    return (
+      <ServiceUnavailable/>
+    );
+  }
 
   return (
     <main className="leading-7 px-10">

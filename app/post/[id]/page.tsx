@@ -1,8 +1,9 @@
 import React from "react";
 import { prisma } from "@/app/api/client";
-import { Post as PostType } from "@prisma/client";
+import { Post, Post as PostType } from "@prisma/client";
 import Sidebar from "@/app/(components)/Sidebar";
 import Article from "@/app/post/[id]/Article";
+import ServiceUnavailable from "@/app/(components)/ServiceUnavailable";
 
 type Props = {
   params: { id: string };
@@ -11,19 +12,25 @@ type Props = {
 export const revalidate = 6000;
 
 const getPost = async (id: string) => {
-  const post: PostType | null = await prisma.post.findUnique({
-    where: { id },
-  });
+  try {
+    const post: PostType | null = await prisma.post.findUnique({
+      where: { id },
+    });
 
-  if (!post) {
-    console.log(`Post with id: ${id} not found`);
-    return null;
+    if (!post) {
+      console.log(`Post with id: ${id} not found`);
+      return null;
+    }
+    
+    return post;
+  } catch (error) {
+    console.log("Error retrieving posts:", error);
+    return []; 
   }
-  
-  return post;
 };
 
 const getRelatedPosts = async (postId: string, category: string): Promise<PostType[]> => {
+  try {
   if (category === 'today') {
     const relatedPosts: PostType[] = await prisma.post.findMany({
       where: {
@@ -64,9 +71,14 @@ const getRelatedPosts = async (postId: string, category: string): Promise<PostTy
 
     return relatedPosts;
   }
+} catch (error) {
+  console.log("Error retrieving posts:", error);
+  return []; 
+}
 };
 
 const getTodayPosts = async (postId: string, category: string): Promise<PostType[]> => {
+  try {
   const todayPosts: PostType[] = await prisma.post.findMany({
     where: {
       category: category,
@@ -81,23 +93,36 @@ const getTodayPosts = async (postId: string, category: string): Promise<PostType
   });
 
   return todayPosts;
+} catch (error) {
+  console.log("Error retrieving posts:", error);
+  return []; 
+}
 };
 
 const Post = async ({ params }: Props) => {
   const { id } = params;
   const post = await getPost(id);
+  
+  if (!post) {
+    return (
+      <ServiceUnavailable/>
+    )
+  }
+  //@ts-ignore
   const relatedPosts = await getRelatedPosts(id, post?.category || '');
   const todayPosts = await getTodayPosts(id, 'today');
 
-  if (!post) {
-    return <div>Post Not Found</div>;
+  if (!relatedPosts || !todayPosts) {
+    return (
+      <ServiceUnavailable/>
+    )
   }
 
   return (
     <main className="px-10 leading-7">
       <div className="md:flex gap-10 mb-5 max-w-maxw mx-auto">
         <div className="basis-3/4">
-          <Article post={post} relatedPosts={relatedPosts}/>
+          <Article post={post as Post} relatedPosts={relatedPosts}/>
         </div>
         <div className="basis-1/4">
           <Sidebar todayPosts={todayPosts}/>

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
-import { prisma } from "../client";
 import { fetchFullArticleContent } from '../news/route';
 const data = require('../data.json');
 
@@ -20,7 +19,6 @@ async function filterArticles(articles: any) {
   let count = 0;
 
   for (const article of articles) {
-
     if (!article.urlToImage) {
       continue;
     }
@@ -125,6 +123,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No articles found' }, { status: 404 });
     }
 
+    // Sort articles by publishedAt field in descending order (newest first)
+    selectedArticles.sort((a, b) => {
+      const dateA = new Date(a.publishedAt);
+      const dateB = new Date(b.publishedAt);
+      return dateB.getTime() - dateA.getTime();
+    });
+
     // Fetch the full article content for each article
     const categorizedArticles = await Promise.all(
       selectedArticles.map(async article => {
@@ -135,7 +140,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(categorizedArticles, { status: 200 });
   } catch (error) {
-    console.error("request error", error);
+    console.log("request error", error);
     return NextResponse.json({ error: "Error fetching news" }, { status: 500 });
   } 
 }

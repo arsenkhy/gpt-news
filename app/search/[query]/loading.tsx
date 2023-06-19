@@ -12,7 +12,7 @@ function Loading() {
                 Summarize tech news with
             </h1>
             <h1 className="text-center font-bold text-2xl sm:text-4xl mt-2 bg-gray bg-opacity-30 animate-pulse text-transparent">
-                ChatGHpt 3.5
+                ChatGPT 3.5
             </h1>
             <h2 className="desc text-center max-w-[768px] mt-10 mx-5 md:mx-auto  text-md sm:text-lg bg-gray bg-opacity-30 animate-pulse text-transparent">
                 Personalize and enhance your news search. Stay informed and empowered on the tech stories that matter to you.

@@ -45,7 +45,7 @@ const Subscribe = () => {
         {showWarning && (
           <p className="text-red-500 mb-2">Please enter a valid email address</p>
         )}
-        <button className="bg-third text-primary font-semibold w-5/6 min-w-[100px] py-2 px-5 mt-3 opacity-90 hover:opacity-100">
+        <button className="bg-third text-primary font-semibold w-5/6 min-w-[100px] py-2 px-5 mt-3 sm:opacity-90 hover:opacity-100">
           <span className="opacity-100">SUBSCRIBE</span> 
         </button>
       </form>

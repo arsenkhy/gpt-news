@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("request error", error);
+    console.log("request error", error);
     NextResponse.json({ error: "error updating post" }, { status: 500 });
   }
 }

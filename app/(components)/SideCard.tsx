@@ -15,7 +15,7 @@ const SideCard = ({
   return (
     <div className="flex justify-between gap-3">
       <Link
-        className="basis-1/3 hover:opacity-70"
+        className="basis-1/3 opacity-90 hover:opacity-100 transition-all"
         href={`${process.env.NEXT_PUBLIC_URL}/post/${post?.id}`}
       >
         <div className={`relative w-auto h-24 md:h-16 `}>
@@ -30,7 +30,7 @@ const SideCard = ({
       <div className="basis-2/3">
         <Link href={`${process.env.NEXT_PUBLIC_URL}/post/${post?.id}`} style={{ textDecoration: 'none' }} >
           <h4
-            className="font-bold hover:text-third text-base line-clamp-4">
+            className="font-bold hover:text-third transition-all text-base line-clamp-4">
             {title}
           </h4>
         </Link>

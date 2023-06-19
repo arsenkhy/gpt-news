@@ -51,13 +51,13 @@ const Results = ({ articles }: Props) => {
             return data;
           } else {
             // Handle error response
-            console.error("Request failed with status:", response.status);
+            console.log("Request failed with status:", response.status);
             const errorData = await response.json();
-            console.error("Error message:", errorData.error);
+            console.log("Error message:", errorData.error);
           }
         } catch (error) {
           // Handle network or other errors
-          console.error("Request error:", error);
+          console.log("Request error:", error);
           return { content: "" };
         }  finally {
           setIsLoading(false); // Set isLoading to false after the API request is completed
@@ -96,7 +96,7 @@ const Results = ({ articles }: Props) => {
             {isLoading ? (
               <div>
                 <div className="relative flex items-center flex-col my-5">
-                  <WaveLoading color="#000000" size="large" speed="1" className="text-secondary h-50 w-50" />
+                  <WaveLoading color="#000000" size="large" speed="1" className="text-secondary h-50 w-50 dark:filter dark:invert" />
                   <p className="text-base sm:text-lg font-semibold mt-20">Generating summary...</p>
                 </div>
 

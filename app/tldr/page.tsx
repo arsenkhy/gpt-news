@@ -5,18 +5,38 @@ import { Post } from "@prisma/client";
 import Sidebar from "../(components)/Sidebar";
 import TextContent from "../(components)/TextContent";
 import Card from "../(components)/Card";
+import ServiceUnavailable from "../(components)/ServiceUnavailable";
+
+const defaultPost: Post = {
+    id: "0",
+    createdAt: new Date(),
+    publishedAt: new Date(),
+    category: "",
+    source: "",
+    title: "",
+    author: "",
+    url: "",
+    image: "",
+    content: "",
+    snippet: "",
+  };
 
 const getPost = async (id: string) => {
-    const post: Post | null = await prisma.post.findUnique({
-      where: { id },
-    });
-  
-    if (!post) {
-      console.log(`Post with id: ${id} not found`);
-      return null;
-    }
+    try{
+        const post: Post | null = await prisma.post.findUnique({
+        where: { id },
+        });
     
-    return post;
+        if (!post) {
+        console.log(`Post with id: ${id} not found`);
+        return null;
+        }
+        
+        return post;
+    }  catch (error) {
+        console.log("Error retrieving posts:", error);
+        return defaultPost; 
+      }
   };
 
 const TLDR = async () => {
@@ -25,10 +45,10 @@ const TLDR = async () => {
   const post = await getPost(id1);  
   const post2 = await getPost(id2);  
 
-  if (!post) {
-    return <div>Post Not Found</div>;
-  } else if (!post2) {
-    return <div>Post Not Found</div>;
+  if (!post || post === defaultPost) {
+    return <ServiceUnavailable />;
+  } else if (!post2 || post2 === defaultPost) {
+    return <ServiceUnavailable />;
   }
 
   const currentDate = new Date();
@@ -112,10 +132,10 @@ const TLDR = async () => {
 
                     <Card
                         className=" sm:flex justify-between items-center gap-3 mt-7 mb-8"
-                        post={post }
+                        post={post}
                     />
 
-                     {/*THIS WEEK*/}
+                    {/*THIS WEEK*/}
                     <hr className="border-1 opacity-20" />
                     <div className="flex items-center gap-3 my-4">
                         <p className="font-bold text-2xl">This week</p>

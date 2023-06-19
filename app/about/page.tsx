@@ -26,17 +26,13 @@ const About = async () => {
               <Image
                 className="logo"
                 alt="main-logo"
-                src="https://img.icons8.com/material-outlined/96/decentralized-network.png"
+                src={Logo}
                 width={150}
                 height={150}
               />
               <h1 className="text-5xl md:text-5xl text-secondary font-bold mt-3">Tech Digest</h1>
             </div>    
-
-
           </div>
-
-
         </div>
       </main>
     </div>

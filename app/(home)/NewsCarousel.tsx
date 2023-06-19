@@ -17,11 +17,12 @@ type Props = {
 
 const NewsCarousel = ({ hotTopicPosts }: Props) => {
   return (
-    <section className="mt-10">
-        <hr className="border-1 opacity-20" />
+    <section className="mt-5">
+        <hr className="border-1 opacity-20 mb-7 sm:mb-0" />
         {/* HEADER */}
-        <div className="flex items-center gap-3 my-2 xs:my-8">
+        <div className="xs:flex items-center gap-3 my-2 xs:my-8">
             <p className="font-bold text-2xl">Artificial Intelligence</p>
+            <div className="bg-secondary text-primary text-md font-bold inline-block mt-3 xs:mt-0 py-1 px-5">TRENDING</div>    
         </div>
         
         {/* SWIPER */}
@@ -58,9 +59,6 @@ const NewsCarousel = ({ hotTopicPosts }: Props) => {
                 spaceBetween: 60,
                 },
             }}
-            // scrollbar={{ draggable: true }}
-            // onSwiper={(swiper) => console.log(swiper)}
-            // onSlideChange={() => console.log('slide change')}
             >
                 <SwiperSlide>
                     <div className="sm:grid gap-5 grid-cols-2 grid-rows-2 sm:h-[450px] pb-10 ">

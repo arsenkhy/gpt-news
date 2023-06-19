@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Subscribe from "./Subscribe";
 import TrySearch from "./TrySearch";
 import React from "react";

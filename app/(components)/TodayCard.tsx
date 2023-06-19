@@ -41,12 +41,12 @@ type TodayCardProps = {
         ref={ref}
         initial={{ opacity: 0, y:20 }}
         animate={{ opacity: inView ? 1 : 0, y:0 }}
-        transition={{ duration: 0.7 }}
+        transition={{ duration: 0.3 }}
         >
           <h4 className="inline-block px-5 py-1 bg-secondary bg-opacity-40 rounded-2xl text-primary text-xs">
           {post?.source}
           </h4> 
-          <div className="text-primary mt-2 text-lg font-semibold " >{post?.title}</div>
+          <div className="text-primary mt-2 text-lg font-semibold hover:opacity-80 transition-all" >{post?.title}</div>
         </motion.div>
       </Link>
     );

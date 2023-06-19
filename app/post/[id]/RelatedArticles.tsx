@@ -8,8 +8,8 @@ type Props = {
 
 const RelatedArticles = ({ relatedPosts }: Props) => {
   return (
-    <section className="mt-2">
-      <hr className="border-1 border-secondary opacity-20" />
+    <section className="">
+      <hr className="border-1 border-secondary opacity-20 my-6" />
       {/* HEADER */}
       <div className="inline-flex items-center gap-3">
         <p className="m-0 font-bold text-2xl">Related Articles</p>

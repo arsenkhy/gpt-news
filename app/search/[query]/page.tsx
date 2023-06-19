@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import { POST as news} from 'app/api/findNews/route';
 import SearchHome from "../SearchHome"
 import SearchInput from "../SearchInput";
@@ -19,7 +19,7 @@ async function getNews(query: any) {
       body: JSON.stringify({ query }),
     });
   
-     return await news(newsRequest)
+    return await news(newsRequest)
   }
 
 const NoResultsMessage = ({ query }: { query: string }) => {
@@ -60,9 +60,7 @@ const Search = async ({ params }: Props) => {
         {!newsResponse || newsResponse.status !== 200 ? (
             <NoResultsMessage query={decodedQuery} />
         ) : (
-
             <Results articles={articles} />
-
         )}
         </div>
       </main>

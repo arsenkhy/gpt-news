@@ -10,8 +10,8 @@ const TrySearch = () => {
         <p className="text-wh-500 my-3 w-5/6 mx-auto text-base mb-6">
           Try generating summaries of your custom news search
         </p>
-        <Link href="/">
-        <button className="relative bg-secondary text-primary text-base w-5/6 font-semibold rounded-sm min-w-[100px] py-2 px-5 mt-3 opacity-80 hover:opacity-100 transition-all">
+        <Link href={`${process.env.NEXT_PUBLIC_URL}/search`}>
+        <button className="relative bg-secondary text-primary text-base w-5/6 font-semibold rounded-sm min-w-[100px] py-2 px-5 mt-3 sm:opacity-80 hover:opacity-100 transition-all">
           <span className="opacity-100">Search</span>
         </button>
         </Link>

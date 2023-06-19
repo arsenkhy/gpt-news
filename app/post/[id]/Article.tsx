@@ -41,11 +41,7 @@ const Content = ({ post, relatedPosts }: Props) => {
                 <h6 className="text-primary text-sm">{post.source}</h6>
             </div>
             <h6 className="text-secondary text-sm">|&nbsp;&nbsp;{formattedDate}</h6>
-            {post.author !== "" && (
-               <h5 className="text-secondary text-sm">|&nbsp;&nbsp;originally by {post.author}</h5>
-            )}
         </div>
-
 
         {/* IMAGE */}
         <div className="relative w-auto mt-2 mb-16 h-96 sm:h-128">
@@ -79,7 +75,7 @@ const Content = ({ post, relatedPosts }: Props) => {
           </p>
         </div>
         <Link href={post?.url} target="_blank">
-          <div className="mt-4 sm:mt-0 ml-0 sm:ml-4 px-4 py-2 text-white bg-secondary rounded transition-all hover:scale-110">
+          <div className="mt-4 sm:mt-0 ml-0 sm:ml-4 px-4 pt-2 text-secondary underline rounded transition-all hover:text-third">
             Read original article
           </div>
         </Link>

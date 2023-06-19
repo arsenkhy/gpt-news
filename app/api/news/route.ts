@@ -20,14 +20,21 @@ const INCLUDED_SOURCES = data.includedSources;
  */
 export async function fetchFullArticleContent(url: string): Promise<string> {
   try {
+    const originalConsoleError = console.error;
+    console.error = () => {};
+
     const fullArticleResponse = await axios.get(url);
     const fullArticleHtml = fullArticleResponse.data;
     const dom = new JSDOM(fullArticleHtml, {
       pretendToBeVisual: true,
-      url: url
+      url: url,
     });
     const article = new Readability(dom.window.document).parse();
     const articleContent = article && article.textContent ? article.textContent.slice(0, CONTENT_MAX_CHAR_LIMIT) : '';
+ 
+    // Restore original console method
+    console.error = originalConsoleError;
+
     return articleContent;
   } catch (error) {
     console.error('Failed to fetch article content:', error);
@@ -195,7 +202,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(categorizedArticles, { status: 200 });
   } catch (error) {
-    console.error("request error", error);
+    console.log("request error", error);
     return NextResponse.json({ error: "Error fetching news" }, { status: 500 });
   } 
 }
