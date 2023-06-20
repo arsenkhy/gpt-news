@@ -45,12 +45,6 @@ async function filterArticles(articles: any) {
       continue;
     }
 
-    // Check if content is readable from url
-    const fullArticleContent = fetchFullArticleContent(article.url);
-    if (!fullArticleContent) {
-      continue;
-    }
-
     selectedArticles.push(article);
     count++;
 

@@ -33,7 +33,7 @@ const Results = ({ articles }: Props) => {
       }
     }, [isLoading]);
 
-    const getSummary = async (content: string) => {
+    const updateSummary = async (content: string) => {
         try {
           setIsLoading(true);
           const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/summarize`, {
@@ -48,21 +48,24 @@ const Results = ({ articles }: Props) => {
       
           if (response.ok) {
             const data = await response.json();
-            return data;
+            setText(data.content);
+          } else if (response.status === 504) {
+            console.log("Request failed with status:", response.status);
+            setText("<h3><strong>Sorry, the request has exceeded the timeout limit of 10 seconds set by Vercel.</strong></h3> <p>Please check your internet connection and try again.</p>");
           } else {
             // Handle error response
             console.log("Request failed with status:", response.status);
             const errorData = await response.json();
+            setText("<h3><strong>Sorry, we couldn't summarize this article.</strong></h3> <p>Please try again.</p>");
             console.log("Error message:", errorData.error);
           }
         } catch (error) {
           // Handle network or other errors
           console.log("Request error:", error);
-          return { content: "" };
+          setText("<h3><strong>Sorry, we couldn't summarize this article.</strong></h3> <p>Please try again.</p>");
         }  finally {
           setIsLoading(false); // Set isLoading to false after the API request is completed
         }
-        return { content: "" };
     };
 
     // On summarize button click
@@ -70,14 +73,7 @@ const Results = ({ articles }: Props) => {
       setSelectedCard(index);
       setShowSummary(false);
 
-      const newText = await getSummary(text);
-      
-      // Error getting summary
-      if (newText.content === "") {
-        setText("<h3><strong>Sorry, we couldn't summarize this article.</strong></h3> <p>Please try again.</p>");
-      } else {
-        setText(newText.content);
-      }
+      const update = await updateSummary(text);
 
       setShowSummary(true);
       setKey(key + 1);
@@ -132,7 +128,6 @@ const Results = ({ articles }: Props) => {
                   >
                   <TextContent key={key} content={text} />
                 </motion.div>
-
                 </div>
               </div>
             </div>

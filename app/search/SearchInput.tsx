@@ -15,6 +15,12 @@ const SearchInput = ({ s = "" }: Props) => {
         const searchRoute = `${process.env.NEXT_PUBLIC_URL}/search/${encodedSearchQuery}`;
         window.location.href = searchRoute;
       };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        e.currentTarget.blur(); // Remove focus from the input field
+      }
+    };
     
     return (
       <form onSubmit={handleSearch} className="mt-20 flex justify-center w-full">
@@ -25,6 +31,7 @@ const SearchInput = ({ s = "" }: Props) => {
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search topic..."
             className="pl-10 pr-4 py-2 sm:py-3 ml-4 text-base border border-gray rounded-xl shadow-xl w-full"
+            onKeyPress={handleKeyPress}
           />
           <FaSearch size={15} className="absolute top-1/2 left-4 transform -translate-y-1/2 ml-3 text-gray" />
         </div>

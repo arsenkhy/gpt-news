@@ -36,18 +36,41 @@ const NoResultsMessage = ({ query }: { query: string }) => {
     );
 };
 
+const ErrorMessage = () => {
+  return (
+    <div className="mt-10 items-center justify-center">
+      <h3 className="text-xl font-semibold text-center">Sorry, the request has exceeded the timeout limit of 10 seconds set by Vercel.</h3>
+      <p className="text-md text-center">
+        Please check your internet connection and try again.
+      </p>
+    </div>
+  );
+};
+
 const Search = async ({ params }: Props) => {
   const { query } = params;
   const decodedQuery = decodeURIComponent(query);
   let newsResponse: any;
   let articles: any;
+  let errorFlag: string | null = null;
+
+  // Vercel has timeout of 10 seconds for serverless functions, stop loading after 12 seconds
+  const timeoutPromise = new Promise((resolve) => {
+    setTimeout(resolve, 12000);
+  });
 
   try {
-    newsResponse = await getNews(decodedQuery);
-    articles = await newsResponse.json();
+    // Wait for either the news response or the timeout promise to resolve
+    newsResponse = await Promise.race([getNews(decodedQuery), timeoutPromise]);
 
+    if (newsResponse) {
+      articles = await newsResponse.json();
+    } else {
+      errorFlag = "Request timed out.";
+    }
   } catch (error) {
     console.log(error);
+    errorFlag = "An error occurred while fetching the news.";
   }
 
   return (
@@ -57,11 +80,13 @@ const Search = async ({ params }: Props) => {
         <SearchHome />
         <SearchInput s={decodedQuery}/>
 
-        {!newsResponse || newsResponse.status !== 200 ? (
+        {errorFlag ? (
+            <ErrorMessage />
+          ) : !newsResponse || newsResponse.status !== 200 ? (
             <NoResultsMessage query={decodedQuery} />
-        ) : (
+          ) : (
             <Results articles={articles} />
-        )}
+          )}
         </div>
       </main>
     </div>

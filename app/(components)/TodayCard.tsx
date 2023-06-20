@@ -41,7 +41,7 @@ type TodayCardProps = {
         ref={ref}
         initial={{ opacity: 0, y:20 }}
         animate={{ opacity: inView ? 1 : 0, y:0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.5 }}
         >
           <h4 className="inline-block px-5 py-1 bg-secondary bg-opacity-40 rounded-2xl text-primary text-xs">
           {post?.source}
