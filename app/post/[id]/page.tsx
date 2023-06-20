@@ -9,24 +9,19 @@ type Props = {
   params: { id: string };
 };
 
-export const revalidate = 6000;
+export const revalidate = 60;
 
 const getPost = async (id: string) => {
-  try {
-    const post: Post | null = await prisma.post.findUnique({
-      where: { id },
-    });
+  const post: Post | null = await prisma.post.findUnique({
+    where: { id },
+  });
 
-    if (!post) {
-      console.log(`Post with id: ${id} not found`);
-      return null;
-    }
-    
-    return post;
-  } catch (error) {
-    console.log("Error retrieving posts:", error);  
-    return []; 
+  if (!post) {
+    console.log(`Post with id: ${id} not found`);
+    return null;
   }
+  
+  return post; 
 };
 
 const getRelatedPosts = async (postId: string, category: string): Promise<Post[]> => {
@@ -102,29 +97,36 @@ const getTodayPosts = async (postId: string, category: string): Promise<Post[]> 
 
 const PostPage = async ({ params }: Props) => {
   const { id } = params;
-  const post = await getPost(id);
+  const post: Post | null = await getPost(id);
   
   if (!post) {
     return <ServiceUnavailable />;
   } 
-  //@ts-ignore
-  const relatedPosts = await getRelatedPosts(id, post?.category || '');
-  const todayPosts = await getTodayPosts(id, 'today');
+  const relatedPosts: Array<Post> = [];
+  relatedPosts.push(post);
+  relatedPosts.push(post);
+  relatedPosts.push(post);
 
-  if (!relatedPosts || !todayPosts) {
-    return (
-      <ServiceUnavailable/>
-    )
-  }
+  //@ts-ignore
+  // const relatedPosts = await getRelatedPosts(id, post?.category || '');
+  // const todayPosts = await getTodayPosts(id, 'today');
+
+  // if (!relatedPosts || !todayPosts) {
+  //   return (
+  //     <ServiceUnavailable/>
+  //   )
+  // }
 
   return (
     <main className="px-10 leading-7">
       <div className="md:flex gap-10 mb-5 max-w-maxw mx-auto">
         <div className="basis-3/4">
-          <Article post={post as Post} relatedPosts={relatedPosts}/>
+          <Article post={post} relatedPosts={relatedPosts}/>
         </div>
         <div className="basis-1/4">
-          <Sidebar todayPosts={todayPosts}/>
+          <Sidebar 
+            // todayPosts={todayPosts}
+          />
         </div>
       </div>
     </main>

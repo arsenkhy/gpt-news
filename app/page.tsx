@@ -7,7 +7,7 @@ import ServiceUnavailable from './(components)/ServiceUnavailable'
 import { prisma } from "app/api/client";
 import { Post } from "@prisma/client";
 
-export const revalidate = 1000;
+export const revalidate = 60;
 
 const getPosts = async () => {
   try {
