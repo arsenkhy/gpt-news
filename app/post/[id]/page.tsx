@@ -12,16 +12,21 @@ type Props = {
 export const revalidate = 60;
 
 const getPost = async (id: string) => {
-  const post: Post | null = await prisma.post.findUnique({
-    where: { id },
-  });
+  try {
+    const post: Post | null = await prisma.post.findUnique({
+      where: { id },
+    });
 
-  if (!post) {
-    console.log(`Post with id: ${id} not found`);
-    return null;
+    if (!post) {
+      console.log(`Post with id: ${id} not found`);
+      return null;
+    }
+    
+    return post;
+  } catch (error) {
+    console.log("Error retrieving posts:", error);  
+    return []; 
   }
-  
-  return post; 
 };
 
 const getRelatedPosts = async (postId: string, category: string): Promise<Post[]> => {
@@ -97,35 +102,30 @@ const getTodayPosts = async (postId: string, category: string): Promise<Post[]> 
 
 const PostPage = async ({ params }: Props) => {
   const { id } = params;
-  const post: Post | null = await getPost(id);
+  const post = await getPost(id);
   
   if (!post) {
     return <ServiceUnavailable />;
   } 
-  const relatedPosts: Array<Post> = [];
-  relatedPosts.push(post);
-  relatedPosts.push(post);
-  relatedPosts.push(post);
-
   //@ts-ignore
-  // const relatedPosts = await getRelatedPosts(id, post?.category || '');
-  // const todayPosts = await getTodayPosts(id, 'today');
+  const relatedPosts = await getRelatedPosts(id, post?.category || '');
+  const todayPosts = await getTodayPosts(id, 'today');
 
-  // if (!relatedPosts || !todayPosts) {
-  //   return (
-  //     <ServiceUnavailable/>
-  //   )
-  // }
+  if (!relatedPosts || !todayPosts) {
+    return (
+      <ServiceUnavailable/>
+    )
+  }
 
   return (
     <main className="px-10 leading-7">
       <div className="md:flex gap-10 mb-5 max-w-maxw mx-auto">
         <div className="basis-3/4">
-          <Article post={post} relatedPosts={relatedPosts}/>
+          <Article post={post as Post} relatedPosts={relatedPosts}/>
         </div>
         <div className="basis-1/4">
           <Sidebar 
-            // todayPosts={todayPosts}
+            todayPosts={todayPosts}
           />
         </div>
       </div>
