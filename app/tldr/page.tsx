@@ -21,35 +21,34 @@ const defaultPost: Post = {
     snippet: "",
   };
 
-const getPost = async (id: string) => {
-    try{
-        const post: Post | null = await prisma.post.findUnique({
-        where: { id },
+const getPosts = async () => {
+    try {
+        // Fetch the two most recent posts
+        const posts: Post[] = await prisma.post.findMany({
+            take: 2,
+            orderBy: { publishedAt: 'desc' },
         });
-    
-        if (!post) {
-        console.log(`Post with id: ${id} not found`);
-        return null;
+
+        if (posts.length < 2) {
+            console.log(`Not enough posts found. Found: ${posts.length}`);
+            return null;
         }
-        
-        return post;
-    }  catch (error) {
+
+        return posts;
+    } catch (error) {
         console.log("Error retrieving posts:", error);
-        return defaultPost; 
-      }
-  };
+        return null;
+    }
+};
 
 const TLDR = async () => {
-  const id1 = 'clizglnhb0000wdyinekt1hyz';
-  const id2 = 'climhrfif0004wd1a2yw0jb19';
-  const post = await getPost(id1);  
-  const post2 = await getPost(id2);  
+  const posts = await getPosts();
 
-  if (!post || post === defaultPost) {
-    return <ServiceUnavailable />;
-  } else if (!post2 || post2 === defaultPost) {
+  if (!posts) {
     return <ServiceUnavailable />;
   }
+
+  const [post, post2] = posts;
 
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-US", {
