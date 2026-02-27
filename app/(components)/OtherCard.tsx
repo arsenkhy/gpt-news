@@ -40,11 +40,11 @@ const OtherCard = ({
 
         {/* LINKS */}
         <div className="flex flex-col gap-3">
-            <Link className="font-semibold text-lg line-clamp-2" href={`${process.env.NEXT_PUBLIC_URL}/post/${posts[0]?.id}`}>{posts[0].title}</Link>
+            <Link className="font-semibold text-lg line-clamp-2" href={`${process.env.NEXT_PUBLIC_URL}/post/${posts[0]?.id}`}>{posts[0]?.title}</Link>
             <hr className="border-1 opacity-20" />
-            <Link className="font-semibold text-lg line-clamp-2" href={`${process.env.NEXT_PUBLIC_URL}/post/${posts[1]?.id}`}>{posts[1].title}</Link>
+            <Link className="font-semibold text-lg line-clamp-2" href={`${process.env.NEXT_PUBLIC_URL}/post/${posts[1]?.id}`}>{posts[1]?.title}</Link>
             <hr className="border-1 opacity-20" />
-            <Link className="font-semibold text-lg line-clamp-2" href={`${process.env.NEXT_PUBLIC_URL}/post/${posts[2]?.id}`}>{posts[2].title}</Link>
+            <Link className="font-semibold text-lg line-clamp-2" href={`${process.env.NEXT_PUBLIC_URL}/post/${posts[2]?.id}`}>{posts[2]?.title}</Link>
         </div>    
 
             
